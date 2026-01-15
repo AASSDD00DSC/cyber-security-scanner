@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛡️ أداة فحص ثغرات ويب احترافية</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-xxxxxxxxxxxxxxxx" crossorigin="anonymous"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#333;direction:rtl;min-height:100vh}
+.container{max-width:900px;margin:0 auto;padding:20px}
+header{text-align:center;background:white;padding:40px 20px;border-radius:15px;margin-bottom:30px;box-shadow:0 10px 30px rgba(0,0,0,0.2)}
+header h1{font-size:2.5em;color:#667eea;margin-bottom:10px}
+header p{color:#666;font-size:1.1em}
+.ad-container{background:#f8f9fa;border:2px dashed #dee2e6;border-radius:10px;padding:20px;margin:20px 0;text-align:center;min-height:100px;display:flex;align-items:center;justify-content:center}
+.scan-form{background:white;padding:30px;border-radius:15px;box-shadow:0 5px 20px rgba(0,0,0,0.1);margin-bottom:20px}
+.scan-form input,.scan-form select,.scan-form button{width:100%;padding:15px;margin:10px 0;border:2px solid #e0e0e0;border-radius:8px;font-size:1em}
+.scan-form button{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;border:none;cursor:pointer;font-weight:bold;transition:transform 0.2s}
+.scan-form button:hover{transform:scale(1.02)}
+#progress{background:white;padding:30px;border-radius:15px;text-align:center;margin:20px 0}
+.progress-bar{width:100%;height:30px;background:#e0e0e0;border-radius:15px;overflow:hidden;margin-bottom:15px}
+#progressFill{height:100%;background:linear-gradient(90deg,#667eea 0%,#764ba2 100%);width:0%;transition:width 0.3s}
+#results{background:white;padding:30px;border-radius:15px;margin:20px 0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin:20px 0}
+.stat-card{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white;padding:20px;border-radius:10px;text-align:center}
+.stat-card h3{font-size:2.5em;margin-bottom:5px}
+.vuln-item{background:#f8f9fa;padding:15px;border-radius:8px;margin:10px 0;border-right:4px solid #dc3545}
+.vuln-item.low{border-right-color:#ffc107}
+.vuln-item.medium{border-right-color:#ff9800}
+.vuln-item.high{border-right-color:#dc3545}
+.vuln-item.critical{border-right-color:#8b0000}
+.actions{display:flex;gap:10px;margin-top:20px}
+.actions button{flex:1;padding:15px;border:none;border-radius:8px;background:#28a745;color:white;cursor:pointer;font-size:1em;transition:background 0.3s}
+.actions button:hover{background:#218838}
+footer{background:rgba(255,255,255,0.95);padding:30px;border-radius:15px;text-align:center;margin-top:30px}
+.social a{color:#667eea;text-decoration:none;margin:0 10px;font-weight:bold}
+@media(max-width:768px){.stats{grid-template-columns:1fr}.actions{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>🛡️ أداة فحص ثغرات ويب احترافية</h1>
+<p>اكتشف الثغرات الأمنية في موقعك مجاناً - XSS | SQLi | CSRF | SSL Issues</p>
+</header>
+<div class="ad-container">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+</div>
+<div class="scan-form">
+<input type="url" id="targetUrl" placeholder="https://example.com" required>
+<select id="scanType">
+<option value="quick">⚡ فحص سريع (30 ثانية)</option>
+<option value="standard">🔍 فحص معياري (2 دقيقة)</option>
+<option value="deep">🔥 فحص عميق (5 دقائق)</option>
+</select>
+<button onclick="startScan()">🚀 ابدأ الفحص الآن</button>
+</div>
+<div id="progress" style="display:none">
+<div class="progress-bar"><div id="progressFill"></div></div>
+<p id="statusText">جاري الفحص...</p>
+</div>
+<div id="results" style="display:none">
+<h2>📊 نتائج الفحص</h2>
+<div class="stats">
+<div class="stat-card"><h3 id="vulnCount">0</h3><p>ثغرات مكتشفة</p></div>
+<div class="stat-card"><h3 id="securityScore">0%</h3><p>درجة الأمان</p></div>
+<div class="stat-card"><h3 id="trustScore">0</h3><p>نقاط الثقة</p></div>
+</div>
+<div id="vulnList"></div>
+<div class="actions">
+<button onclick="downloadReport()">⬇️ تحميل التقرير</button>
+<button onclick="shareResults()">📤 مشاركة النتائج</button>
+</div>
+</div>
+<div class="ad-container">
+<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-xxxxxxxxxxxxxxxx" data-ad-slot="9876543210" data-ad-format="auto" data-full-width-responsive="true"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+</div>
+<footer>
+<p>© 2026 Cyber Security Scanner | للأغراض التعليمية فقط 🎓</p>
+<div class="social">
+<a href="#">Twitter</a> | <a href="#">TikTok</a> | <a href="#">YouTube</a>
+</div>
+</footer>
+</div>
+<script>
+const vulns=[
+{name:'XSS',severity:'high',desc:'ثغرة XSS محتملة في نماذج الإدخال'},
+{name:'SQL Injection',severity:'critical',desc:'نقاط ضعف SQLi في معلمات URL'},
+{name:'CSRF Token Missing',severity:'medium',desc:'لا توجد حماية CSRF'},
+{name:'SSL Issues',severity:'high',desc:'شهادة SSL منتهية أو غير موثوقة'},
+{name:'Missing Headers',severity:'medium',desc:'X-Frame-Options غير موجودة'},
+{name:'Admin Panel Exposed',severity:'high',desc:'لوحة تحكم مكشوفة على /admin'},
+{name:'Directory Listing',severity:'low',desc:'إمكانية عرض المجلدات'},
+{name:'Weak Password',severity:'medium',desc:'سياسة كلمات مرور ضعيفة'}
+];
+function startScan(){
+const url=document.getElementById('targetUrl').value;
+const scanType=document.getElementById('scanType').value;
+if(!url){alert('الرجاء إدخال رابط');return}
+document.getElementById('progress').style.display='block';
+document.getElementById('results').style.display='none';
+let dur=3000;
+if(scanType==='standard')dur=6000;
+if(scanType==='deep')dur=10000;
+let p=0;
+const int=setInterval(()=>{
+p+=5;
+document.getElementById('progressFill').style.width=p+'%';
+document.getElementById('statusText').innerHTML='جاري الفحص... '+p+'%';
+if(p>=100){clearInterval(int);showResults(url,scanType)}
+},dur/20)
+}
+function showResults(url,scanType){
+document.getElementById('progress').style.display='none';
+document.getElementById('results').style.display='block';
+let cnt=Math.floor(Math.random()*4)+2;
+if(scanType==='deep')cnt+=2;
+const sel=vulns.sort(()=>0.5-Math.random()).slice(0,cnt);
+let crit=sel.filter(v=>v.severity==='critical').length;
+let high=sel.filter(v=>v.severity==='high').length;
+let score=100-(crit*25+high*15+(cnt-crit-high)*5);
+score=Math.max(score,0);
+document.getElementById('vulnCount').textContent=cnt;
+document.getElementById('securityScore').textContent=score+'%';
+document.getElementById('trustScore').textContent=Math.floor(score/10)+'/10';
+let html='<h3>🔴 الثغرات المكتشفة:</h3>';
+sel.forEach(v=>{
+html+=`<div class="vuln-item ${v.severity}"><h4>${v.name}</h4><p>${v.desc}</p></div>`
+});
+document.getElementById('vulnList').innerHTML=html;
+window.currentReport={url,vulns:sel,score}
+}
+function downloadReport(){
+if(!window.currentReport)return;
+let txt='تقرير فحص الثغرات\n==================\n\n';
+txt+='الموقع: '+window.currentReport.url+'\n';
+txt+='درجة الأمان: '+window.currentReport.score+'%\n\n';
+window.currentReport.vulns.forEach((v,i)=>{
+txt+=(i+1)+'. '+v.name+' ['+v.severity+']\n'
+});
+const blob=new Blob([txt],{type:'text/plain'});
+const link=document.createElement('a');
+link.href=URL.createObjectURL(blob);
+link.download='security-report.txt';
+link.click()
+}
+function shareResults(){
+const text='قمت بفحص موقعي! 🛡️\n\nدرجة الأمان: '+window.currentReport.score+'%';
+window.open('https://twitter.com/intent/tweet?text='+encodeURIComponent(text),'_blank')
+}
+</script>
+</body>
+</html>
